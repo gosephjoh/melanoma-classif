@@ -40,7 +40,7 @@ class AlexNet(BasicNet):
             nn.Dropout(self.args.dropout),
 
             nn.Linear(4096, 2),
-            nn.Softmax()
+            nn.Softmax(dim=1)
         )
 
         self.to(args.device)
