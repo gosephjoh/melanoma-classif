@@ -26,7 +26,6 @@ class Arguments:
         self.num_epochs: int = num_epochs
         self.lr: float = lr
         self.wd: float = wd
-        self.batch_size: int = batch_size
 
 
 def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Arguments) -> pd.DataFrame:
@@ -102,6 +101,6 @@ def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Argu
 
 
 if __name__ == "__main__":
-    train_loader, test_loader = load_images("./data", 32, 0.8, 0.5)
-    args = Arguments(dropout=0.5, model_type=models.AlexNet, num_epochs=40, lr=0.0001, wd=0, batch_size=32)
+    train_loader, test_loader = load_images("./data", 128, 0.8, 1, seed=472)
+    args = Arguments(dropout=0.5, model_type=models.AlexNet, num_epochs=20, lr=0.00001, wd=0.000001)
     train_and_eval(train_loader, test_loader, args)
