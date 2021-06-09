@@ -29,7 +29,7 @@ class MelanomaImageDataset(Dataset):
         return image, label
 
 
-def load_images(data_root: str, batch_size: int) -> (DataLoader, DataLoader):
+def load_images(data_root: str, batch_size: int, split: float, portion: float) -> (DataLoader, DataLoader):
     transform = transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 
     # Load all images into Dataset object.
@@ -37,7 +37,6 @@ def load_images(data_root: str, batch_size: int) -> (DataLoader, DataLoader):
     set_size = len(complete_set)
 
     # Sample a training set and a testing set using pseudo-randomly generated indices
-    split, portion = 0.8, 0.1
     indices = list(range(len(complete_set)))
     numpy.random.seed(472)
     numpy.random.shuffle(indices)
