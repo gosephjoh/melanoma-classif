@@ -30,7 +30,7 @@ class Arguments:
 
 
 def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Arguments) -> pd.DataFrame:
-    model = args.model_type(args.dropout)
+    model = args.model_type(args)
     optimizer = optim.Adam(params=model.parameters(), lr=args.lr, weight_decay=args.wd)
     loss_fn = nn.CrossEntropyLoss()
 
@@ -49,6 +49,8 @@ def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Argu
         for i, data in enumerate(train_loader):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
+            inputs = inputs.to(args.device)
+            labels = labels.to(args.device)
 
             # zero the parameter gradients
             optimizer.zero_grad()
@@ -62,7 +64,7 @@ def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Argu
             optimizer.step()
 
             train_preds += predictions.detach().cpu().numpy().tolist()
-            train_targets += labels.numpy().tolist()
+            train_targets += labels.detach().cpu().numpy().tolist()
 
         train_acc = accuracy_score(train_preds, train_targets)
 
@@ -74,14 +76,16 @@ def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Argu
         for i, data in enumerate(test_loader):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
+            inputs = inputs.to(args.device)
+            labels = labels.to(args.device)
 
             outputs = model(inputs)
             predictions = torch.argmax(outputs, dim=-1)
 
             test_preds += predictions.detach().cpu().numpy().tolist()
-            test_targets += labels.numpy().tolist()
+            test_targets += labels.detach().cpu().numpy().tolist()
 
-            test_loss += loss_fn(outputs, labels)
+            test_loss += loss_fn(outputs, labels).item()
 
         test_acc = accuracy_score(test_preds, test_targets)
 
@@ -92,7 +96,7 @@ def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Argu
         eval_dict['test_acc'].append(test_acc)
         eval_dict['train_loss'].append(train_loss)
         eval_dict['test_loss'].append(test_loss)
-        print(f'Epoch {e}, Train={train_acc:.4f}, Dev={test_acc:.4f}')
+        print(f'Epoch {e}, Train={train_acc:.4f}, Test={test_acc:.4f}')
 
     return pd.DataFrame.from_dict(eval_dict)
 
