@@ -13,7 +13,7 @@ import models
 
 class Arguments:
     def __init__(self, dropout: float, model_type: Type[models.BasicNet],
-                 num_epochs: int, lr: float, wd: float, batch_size: int):
+                 num_epochs: int, lr: float, wd: float):
         # Setup the CUDA device
         os.environ['CUDA_VISIBLE_DEVICES'] = "0"
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
