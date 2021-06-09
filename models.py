@@ -3,14 +3,14 @@ import torch.nn as nn
 
 class BasicNet(nn.Module):
     """Template superclass for our models."""
-    def __init__(self, dropout=0.5):
+    def __init__(self, args):
         super().__init__()
-        self.dropout = dropout
+        self.args = args
 
 
 class AlexNet(BasicNet):
-    def __init__(self, dropout=0.5):
-        super().__init__(dropout)
+    def __init__(self, args):
+        super().__init__(args)
         self.convolutions = nn.Sequential(
             nn.Conv2d(3, 96, (11, 11), stride=(4, 4)),
             nn.ReLU(),
@@ -35,13 +35,15 @@ class AlexNet(BasicNet):
         self.linears = nn.Sequential(
             nn.Linear(1024, 4096),
             nn.Tanh(),
-            nn.Dropout(self.dropout),
+            nn.Dropout(self.args.dropout),
             nn.Linear(4096, 4096),
-            nn.Dropout(self.dropout),
+            nn.Dropout(self.args.dropout),
 
             nn.Linear(4096, 2),
             nn.Softmax()
         )
+
+        self.to(args.device)
 
     def forward(self, x):
         x = self.convolutions(x)
