@@ -101,6 +101,6 @@ def train_and_eval(train_loader: DataLoader, test_loader: DataLoader, args: Argu
 
 
 if __name__ == "__main__":
-    train_loader, test_loader = load_images("./data", 128, 0.8, 1, seed=472)
-    args = Arguments(dropout=0.5, model_type=models.AlexNet, num_epochs=20, lr=0.00001, wd=0.000001)
+    train_loader, test_loader = load_images("./data", 16, 0.8, 0.5, seed=472)
+    args = Arguments(dropout=0.5, model_type=models.EfficientNetB0, num_epochs=20, lr=0.00001, wd=0.000001)
     train_and_eval(train_loader, test_loader, args)
