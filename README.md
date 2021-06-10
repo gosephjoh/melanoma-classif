@@ -6,6 +6,11 @@ Final project for CIS 472 Machine Learning at the University of Oregon using dat
 * Joseph Goh
 * Donna Hooshmand
 
+## Instructions
+
+See the Jupyter notebook titled `CIS 472 Final Project Demo.ipynb` for execution examples and results.
+In order to run the code yourself, you must obtain 256x256 cropped images of the original dataset, which may be generated manually from the raw jpg images below or found on Kaggle.
+
 ## Attribution
 
 International Skin Imaging Collaboration. SIIM-ISIC 2020 Challenge Dataset. International Skin Imaging Collaboration https://doi.org/10.34970/2020-ds01 (2020).
