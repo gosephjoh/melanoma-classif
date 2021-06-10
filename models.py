@@ -1,3 +1,15 @@
+"""
+CIS 472 Machine Learning - Final Project
+models.py
+Contributors: Joseph Goh, Donna Hooshmand
+Description:
+    Contains the CNN algorithm modules.
+    AlexNet was originally implemented in Keras by Donna Hooshmand then ported to PyTorch by Joseph Goh.
+    EfficientNet was written by Joseph Goh, heavily relying on code and instructions by Borna Ahmadzadeh.
+Updated: 06/09/2021
+"""
+
+
 import torch
 import torch.nn as nn
 import numpy as np

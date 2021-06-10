@@ -1,3 +1,13 @@
+"""
+CIS 472 Machine Learning - Final Project
+load_images.py
+Contributors: Joseph Goh
+Description:
+    Contains the Dataset and DataLoader generation code.
+Updated: 06/09/2021
+"""
+
+
 from torch import FloatTensor
 from torch.utils.data import Dataset, DataLoader, SubsetRandomSampler
 import torchvision.transforms as transforms
@@ -30,6 +40,11 @@ class MelanomaImageDataset(Dataset):
 
 
 def load_images(data_root: str, batch_size: int, split: float, portion: float, seed=None) -> (DataLoader, DataLoader):
+    """
+    Specify portion to decide how much of the train set to load.
+    Specify split to decide what part of the loaded set is to be used for training and what part is to be used for testing.
+    Specify seed for reproducible pseudo-randomness.
+    """
     transform = transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 
     # Load all images into Dataset object.

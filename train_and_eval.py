@@ -1,3 +1,13 @@
+"""
+CIS 472 Machine Learning - Final Project
+load_images.py
+Contributors: Joseph Goh
+Description:
+    Code for loading data and model from models.py and load_images.py to perform training and evaluation.
+Updated: 06/09/2021
+"""
+
+
 from typing import Type
 import os
 import torch
