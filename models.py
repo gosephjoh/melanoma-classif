@@ -172,7 +172,7 @@ def create_stage(n_in, n_out, num_layers, layer_type,
     layers = [layer_type(n_in, n_out, kernel_size=kernel_size,
                          stride=stride, r=r, p=p)]
     layers += [layer_type(n_out, n_out, kernel_size=kernel_size,
-                          r=r, p=p) for _ in range(num_layers - 1)]
+                          r=r, p=p) for _ in range(int(num_layers - 1))]
     layers = nn.Sequential(*layers)
     return layers
 
@@ -185,9 +185,9 @@ def scale_width(w: int, scale_factor):
 
     # Do this thing that the EfficientNet paper said we have to ¯\_(ツ)_/¯
     if new_w < scaled * 0.9:
-        return new_w + 8
+        return int(new_w + 8)
     else:
-        return new_w
+        return int(new_w)
 
 
 class EfficientNet(BasicNet):
@@ -225,6 +225,8 @@ class EfficientNet(BasicNet):
                                   nn.Flatten(),
                                   nn.Linear(scaled_widths[-1][1], out_size))
 
+        self.to(args.device)
+
     def feature_extractor(self, x):
         x = self.stem(x)
         x = self.stages(x)
@@ -238,7 +240,7 @@ class EfficientNet(BasicNet):
 
 
 class EfficientNetB0(EfficientNet):
-    def __init__(self, out_size=1000):
+    def __init__(self, args, out_size=1000):
         w_factor = 1
         d_factor = 1
-        super().__init__(w_factor, d_factor, out_size)
+        super().__init__(args, w_factor, d_factor, out_size)
